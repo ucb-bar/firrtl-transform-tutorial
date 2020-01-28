@@ -1,0 +1,10 @@
+[
+  {
+    "class":"gcd.tools.ResilientRegisterAnnotation",
+    "target":"~GCD|GCD>x"
+  },
+  {
+    "class":"gcd.tools.ResilientRegisterAnnotation",
+    "target":"~GCD|GCD>y"
+  }
+]

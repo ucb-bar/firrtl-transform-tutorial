@@ -1,0 +1,22 @@
+[
+  {
+    "class":"gcd.tools.SoftErrorRegisterAnnotation",
+    "target":"~GCD|GCD>x",
+    "errorPPM":1000
+  },
+  {
+    "class":"gcd.tools.SoftErrorRegisterAnnotation",
+    "target":"~GCD|GCD>y",
+    "errorPPM":1000
+  },
+  {
+    "class":"firrtl.transforms.BlackBoxPathAnno",
+    "target":"GCD.SoftErrorFlopModel",
+    "path":"src/main/resources/gcd/SoftErrorFlopModel.v"
+  },
+  {
+    "class":"firrtl.transforms.BlackBoxPathAnno",
+    "target":"GCD.SoftErrorFlopModel",
+    "path":"src/main/resources/gcd/EasyRandom.cpp"
+  }    
+]
