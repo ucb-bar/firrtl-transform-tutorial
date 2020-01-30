@@ -29,7 +29,25 @@ object ResilientRegisters extends Transform {
   }
 
   private def makeRegTriples(copyNameMap: TripleCopyNameMap)(stmt: Statement): Statement = {
-    stmt
+    stmt match {
+      case reg: DefRegister if (copyNameMap.contains(reg.name)) =>
+        // Make three copies of the register with new names
+        val (name0, name1, name2) = copyNameMap(reg.name)
+        val c0 = renameReg(reg, name0)
+        val c1 = renameReg(reg, name1)
+        val c2 = renameReg(reg, name2)
+        // Make a majority-valued node that shares the register's original name
+        val majExpr = MajorityGate(WRef(c0), WRef(c1), WRef(c2))
+        val majNode = DefNode(reg.info, reg.name, majExpr)
+        Block(Seq(c0, c1, c2, majNode))
+      case Connect(info, WRef(name, tpe, RegKind, SinkFlow), rhs) if (copyNameMap.contains(name)) =>
+        val (name0, name1, name2) = copyNameMap(name)
+        val conn0 = Connect(info, WRef(name0, tpe, RegKind, SinkFlow), rhs)
+        val conn1 = Connect(info, WRef(name1, tpe, RegKind, SinkFlow), rhs)
+        val conn2 = Connect(info, WRef(name2, tpe, RegKind, SinkFlow), rhs)
+        Block(Seq(conn0, conn1, conn2))
+      case s => s.map(makeRegTriples(copyNameMap))
+    }
   }
 
   private def regTripleNames(ns: Namespace, regName: String): (String, String, String) = {
