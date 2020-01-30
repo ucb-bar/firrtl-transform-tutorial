@@ -13,9 +13,11 @@ case class ResilientRegisterAnnotation(target: ReferenceTarget) extends SingleTa
   }
 }
 
-object ResilientRegisters extends Transform {
+object ResilientRegisters extends Transform with ResolvedAnnotationPaths {
   val inputForm = LowForm
   val outputForm = LowForm
+
+  val annotationClasses = Seq(classOf[ResilientRegisterAnnotation])
 
   type TripleCopyNameMap = Map[String, Tuple3[String, String, String]]
 
