@@ -12,7 +12,7 @@ class PartializeConnects extends Transform {
 
   def transformStmt(stmt: Statement): Statement = stmt match {
     case Connect(info, loc, expr) =>
-      ???
+      PartialConnect(info, loc, expr)
     case s => s.map(transformStmt)
   }
 
