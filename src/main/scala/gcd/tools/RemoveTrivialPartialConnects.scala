@@ -11,8 +11,8 @@ class RemoveTrivialPartialConnects extends Transform {
   val outputForm = HighForm
 
   def transformStmt(stmt: Statement): Statement = stmt match {
-    case PartialConnect(info, l, r) =>
-      ???
+    case PartialConnect(info, l, r) if (l.tpe == r.tpe) =>
+      Connect(info, l, r)
     case s => s.map(transformStmt)
   }
 
